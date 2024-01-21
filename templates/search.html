@@ -1,0 +1,176 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Search Users</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css">
+    <style>
+        body {
+            background-color: black;
+            color: white;
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 0;
+        }
+
+        nav {
+            background-color: seaGreen;
+            padding: 0.8%;
+            text-align: center;
+        }
+
+        nav a {
+            color: white;
+            text-decoration: none;
+            padding: 1%;
+            margin-left: 6%;
+            margin-right: 6%;
+            display: inline-block;
+        }
+
+        nav a:hover {
+            background-color: white;
+            color: black;
+        }
+    </style>
+</head>
+
+<body>
+    <nav>
+        <a href="/index"><i class="fas fa-home"></i></a>
+        <a href="/message"><i class="fas fa-envelope"></i></a>
+        <a href="/search"><i class="fas fa-search"></i></a>
+        <a href="/history"><i class="fas fa-history"></i></a>
+        <a href="/profile"><i class="fas fa-user"></i></a>
+    </nav>
+    <h1>welcome! {{user_data.rollNumber}}</h1>
+    <h1>Search Users</h1>
+    <div>
+        <label for="search_query">Search Query:</label>
+        <input type="text" id="search_query" name="search_query" required>
+        <!-- <button type="submit">Search</button> -->
+        <label for="message">Message:</label>
+        <input type="text" id="message" placeholder="Enter your message">
+        <button onclick="sendChallenge()">Send Challenge</button>
+    </div>
+
+    <h1>SocketIO User</h1>
+    <div>
+        <!-- <label for="recipient-sid">Recipient SID:</label> -->
+        <!-- <input type="text" id="recipient-sid" placeholder="Enter recipient SID" value="{{ recipient_sid }}"> -->
+    </div>
+
+    <button onclick="sendMessage()">Send Message</button>
+    <div>
+        <!-- Display information about the challenge -->
+        <div id="challenge-info"></p>
+
+        <!-- Buttons for accepting and rejecting the challenge -->
+        <!-- <button onclick="acceptChallenge()">Accept</button>
+        <button onclick="rejectChallenge()">Reject</button> -->
+    </div>
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/socket.io/4.1.2/socket.io.js"></script>
+    <script>
+        var socket = io.connect('http://' + document.domain + ':' + location.port);
+
+        socket.on('connect', function () {
+            console.log(`Connected to the server with SID: ${socket.id}`);
+        });
+
+        socket.on('receive_message', function (data) {
+            console.log('Received message:', data.message);
+            // Handle received message on the user interface (display in the UI, etc.)
+            alert(`Received message: ${data.message}`);
+        });
+
+        function sendMessage() {
+            // var recipientSid = document.getElementById('recipient-sid').value;
+            var username = document.getElementById('search_query').value
+            var message = document.getElementById('message').value;
+            // print(recipientSid,message)
+            console.log(message)
+            MainUser = "{{user_data.rollNumber}}"
+            console.log(MainUser)
+            if (username && message) {
+                socket.emit('send_message', { username: username, mainuser: MainUser, message: message, socket_id: socket.id });
+            } else {
+                alert('Recipient SID and Message are required.');
+            }
+        }
+        function sendChallenge() {
+            var username = document.getElementById('search_query').value;
+            var message = 'You have been challenged!';
+            var mainUser = "{{ user_data.rollNumber }}";
+
+            if (username && message) {
+                socket.emit('send_challenge', { username: username, mainUser: mainUser, message: message });
+            } else {
+                alert('Recipient SID and Message are required.');
+            }
+        }
+        socket.on('receive_challenge', function (data) {
+            console.log("hi")
+            var challengerUsername = data.challenger_username;
+            var message = data.message;
+            console.log("Haof", challengerUsername, message)
+            // Display information about the challenge
+            var challengeInfo = document.getElementById('challenge-info');
+            challengeInfo.innerHTML = ``
+            var card = document.createElement('div')
+            var received_challenge = document.createElement('p')
+            received_challenge.innerText=`You have received a challenge from ${challengerUsername}. Message: ${message}`
+            var accept_btn = document.createElement('button')
+            accept_btn.textContent = "Accept"
+            accept_btn.onclick = function(){
+                acceptChallenge()
+            }
+            var reject_btn = document.createElement('button')
+            reject_btn.textContent = "Reject"
+            reject_btn.onclick = function(){
+                rejectChallenge()
+            }
+            card.appendChild(received_challenge)
+            card.appendChild(accept_btn)
+            card.appendChild(reject_btn)
+            challengeInfo.appendChild(card)
+
+            // challengeInfo.innerHTML = `You have received a challenge from ${challengerUsername}. Message: ${message}`;
+        });
+
+        // Function to accept the challenge
+        function acceptChallenge() {
+            var challengerUsername = document.getElementById('challenge-info').innerText.split(' ')[6];
+            var message = 'Challenge accepted!';
+            socket.emit('accept_challenge', { challenger_username: challengerUsername, message: message });
+        }
+
+        // Function to reject the challenge
+        function rejectChallenge() {
+            var challengerUsername = document.getElementById('challenge-info').innerText.split(' ')[6];
+            var message = 'Challenge rejected.';
+            socket.emit('reject_challenge', { challenger_username: challengerUsername, message: message });
+        }
+
+        socket.on('challenge_status', function (data) {
+            console.log(data.status)
+            if (data.status == "accepted") {
+                console.log("hi")
+                // var challengerUsername = data.challenger_username;
+                var message = data.message;
+                // console.log("Haof", challengerUsername, message)
+                // Display information about the challenge
+                var challengeInfo = document.getElementById('challenge-info');
+                challengeInfo.innerHTML = `<a href="google.com">ready</a>`
+            }
+            else
+            {
+
+            }
+        });
+    </script>
+</body>
+
+</html>

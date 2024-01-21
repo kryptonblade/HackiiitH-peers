@@ -1,0 +1,95 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Profile Page</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css">
+    <style>
+        body {
+            background-color: black;
+            color: white;
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 0;
+        }
+
+        nav {
+            background-color: seaGreen;
+            padding: 0.8%;
+            text-align: center;
+        }
+
+        nav a {
+            color: white;
+            text-decoration: none;
+            padding: 1%;
+            margin-left: 6%;
+            margin-right: 6%;
+            display: inline-block;
+        }
+
+        nav a:hover,
+        nav a.active {
+            background-color: white;
+            color: black;
+        }
+
+        div {
+            text-align: center;
+            /* margin: 100px auto; */
+            padding: 20px;
+            width: 20%;
+            margin-top: 15%;
+            margin-left: 40%;
+            background-color: seaGreen;
+            border-radius: 10px;
+        }
+
+        h2 {
+            color: black;
+        }
+
+        p {
+            color: black;
+            margin: 10px 0;
+        }
+        button {
+            background-color: seaGreen;
+            color: black;
+            padding: 10px;
+            margin-top: 10px;
+            cursor: pointer;
+        }
+
+        button:hover {
+            background-color: white;
+        }
+    </style>
+</head>
+<body>
+    <nav>
+        <a href="/index"><i class="fas fa-home"></i></a>
+        <a href="/message"><i class="fas fa-envelope"></i></a>
+        <a href="/search"><i class="fas fa-search"></i></a>
+        <a href="/history"><i class="fas fa-history"></i></a>
+        <a href="/profile"><i class="fas fa-user"></i></a>
+    </nav>
+    <div>
+        <h2>Profile Page</h2>
+        <p>Roll Number: {{ roll_number }}</p>
+        <p>Codeforces Username: {{ codeforces_username }}</p>
+        <!-- Add more user details as needed -->
+        <button onclick="logout()">Logout</button>
+    </div>
+    <script>
+       
+
+        function logout() {
+            // Redirect to the login page
+            window.location.href = "/"; // Replace with your actual login page URL
+        }
+    
+    </script>
+</body>
+</html>

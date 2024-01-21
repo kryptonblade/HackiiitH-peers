@@ -1,0 +1,60 @@
+body {
+    font-family: 'Arial', sans-serif;
+    background-color: #f4f4f4;
+    margin: 0;
+    padding: 0;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    height: 100vh;
+}
+
+h1 {
+    color: #3498db;
+}
+
+form {
+    margin-top: 20px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+label {
+    font-size: 18px;
+    margin-bottom: 8px;
+    color: #555;
+}
+
+select {
+    font-size: 16px;
+    padding: 8px;
+    margin-bottom: 16px;
+}
+
+button {
+    font-size: 16px;
+    padding: 10px;
+    background-color: #3498db;
+    color: #fff;
+    border: none;
+    cursor: pointer;
+}
+
+#problemLinks {
+    margin-top: 20px;
+}
+
+a {
+    font-size: 16px;
+    color: #3498db;
+    text-decoration: none;
+    margin-bottom: 8px;
+    display: block;
+    transition: color 0.3s;
+}
+
+a:hover {
+    color: #2078c7;
+}

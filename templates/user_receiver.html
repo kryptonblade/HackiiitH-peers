@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>SocketIO User</title>
+</head>
+<body>
+    <h1>SocketIO User</h1>
+    <div>
+        <label for="recipient-sid">Recipient sid:</label>
+        <input type="text" id="recipient-sid" placeholder="Enter recipient SID">
+    </div>
+    <div>
+        <label for="message">Message:</label>
+        <input type="text" id="message" placeholder="Enter your message">
+    </div>
+    <button onclick="sendMessage()">Send Message</button>
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/socket.io/4.1.2/socket.io.js"></script>
+    <script>
+        var socket = io.connect('http://' + document.domain + ':' + location.port);
+
+        socket.on('connect', function() {
+            console.log(`Connected to the server with SID: ${socket.id}`);
+        });
+
+        socket.on('receive_message', function(data) {
+            console.log('Received message:', data.message);
+            // Handle received message on the user interface (display in the UI, etc.)
+            alert(`Received message: ${data.message}`);
+        });
+
+        function sendMessage() {
+            var recipientSid = document.getElementById('recipient-sid').value;
+            var message = document.getElementById('message').value;
+            // print(recipientSid,message)
+            console.log(recipientSid,message)
+            if (recipientSid && message) {
+                socket.emit('send_message', { recipient_sid: recipientSid, message: message });
+            } else {
+                alert('Recipient SID and Message are required.');
+            }
+        }
+    </script>
+</body>
+</html>

@@ -1,0 +1,96 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>SocketIO Chat</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css">
+    <style>
+        body {
+            background-color: black;
+            color: white;
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 0;
+        }
+
+        nav {
+            background-color: seaGreen;
+            padding: 0.8%;
+            text-align: center;
+        }
+
+        nav a {
+            color: white;
+            text-decoration: none;
+            padding: 1%;
+            margin-left: 6%;
+            margin-right: 6%;
+            display: inline-block;
+        }
+
+        nav a:hover {
+            background-color: white;
+            color: black;
+        }
+    </style>
+</head>
+
+<body>
+    <nav>
+        <a href="/index"><i class="fas fa-home"></i></a>
+        <a href="/message"><i class="fas fa-envelope"></i></a>
+        <a href="/search"><i class="fas fa-search"></i></a>
+        <a href="/history"><i class="fas fa-history"></i></a>
+        <a href="/profile"><i class="fas fa-user"></i></a>
+    </nav>
+    <h1>SocketIO Chat</h1>
+    <p>Welcome to the chat application!</p>
+    <!-- <p>Open another tab or browser window and go to <a href="/user" target="_blank">User Interface</a> to start chatting.</p>
+    <p>Open another tab or browser window and go to <a href="/user_receiver" target="_blank">User Interface</a> to start chatting.</p> -->
+    <h1>Welcome to the Flask User Search{{user_data.Handle}}</h1>
+    <a href="/search">Search Users</a>
+</body>
+</html>
+
+
+
+
+
+
+<!-- <!DOCTYPE html>
+<html>
+<head>
+    <title>WebSocket Client</title>
+</head>
+<body>
+    <input type="text" id="message" placeholder="Enter a message">
+    <button onclick="sendMessage()">Send</button>
+    <pre id="output"></pre>
+
+    <script>
+        const ws = new WebSocket("ws://localhost:5000");
+        // console.log("Here")
+        const output = document.getElementById("output");
+        // console.log("Here")
+        ws.onmessage = function(event) {
+            output.textContent += event.data + "\n";
+        };
+        // console.log("Here")
+        function sendMessage() {
+            const message = document.getElementById("message").value;
+            ws.send(message);
+        }
+        // console.log("Here")
+    </script>
+</body>
+</html> -->
+
+
+
+
+
+
+
+
+
